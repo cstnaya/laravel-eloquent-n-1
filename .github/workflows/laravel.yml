@@ -15,11 +15,11 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_DB: test-orm-n
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 0000
+          POSTGRES_DB: ${{ vars.DB_DATABASE }}
+          POSTGRES_USER: ${{ vars.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ vars.DB_PASSWORD }}
         ports:
-          - 5432:5432
+          - ${{ vars.DB_PORT }}:${{ vars.DB_PORT }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -34,8 +34,13 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       
     - name: Create .env
-#       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      run: echo "${{ vars.ENV_FILE }}" >> .env
+      run: |
+        echo "${{ vars.ENV_FILE }}" >> .env
+        ech DB_DATABASE=${{ vars.DB_DATABASE }} >> .env
+        ech DB_USERNAME=${{ vars.DB_USERNAME }} >> .env
+        ech DB_PASSWORD=${{ vars.DB_PASSWORD }} >> .env
+        ech DB_PORT=${{ vars.DB_PORT }} >> .env
+        cat .env
       
     - name: Generate key
       run: php artisan key:generate
