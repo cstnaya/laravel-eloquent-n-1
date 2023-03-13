@@ -40,7 +40,6 @@ jobs:
         echo DB_USERNAME=${{ vars.DB_USERNAME }} >> .env
         echo DB_PASSWORD=${{ vars.DB_PASSWORD }} >> .env
         echo DB_PORT=${{ vars.DB_PORT }} >> .env
-        cat .env
       
     - name: Generate key
       run: php artisan key:generate
