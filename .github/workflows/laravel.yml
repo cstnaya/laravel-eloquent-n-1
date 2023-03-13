@@ -15,9 +15,9 @@ jobs:
       postgres:
         image: postgres
         env:
+          POSTGRES_DB: test-orm-n
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: 0000
-          POSTGRES_DB: test-orm-n
         ports:
           - 5432:5432
         options: >-
