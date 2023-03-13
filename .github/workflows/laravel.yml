@@ -35,11 +35,14 @@ jobs:
       
     - name: Create .env
       run: |
-        echo ${{ vars.ENV_FILE }} >> .env
-        echo DB_DATABASE=${{ vars.DB_DATABASE }} >> .env
-        echo DB_USERNAME=${{ vars.DB_USERNAME }} >> .env
-        echo DB_PASSWORD=${{ vars.DB_PASSWORD }} >> .env
-        echo DB_PORT=${{ vars.DB_PORT }} >> .env
+        touch .env
+        chmod -R 777 .env
+        
+        echo "${{ vars.ENV_FILE }}" >> .env
+        echo DB_DATABASE="${{ vars.DB_DATABASE }}" >> .env
+        echo DB_USERNAME="${{ vars.DB_USERNAME }}" >> .env
+        echo DB_PASSWORD="${{ vars.DB_PASSWORD }}" >> .env
+        echo DB_PORT="${{ vars.DB_PORT }}" >> .env
       
     - name: Generate key
       run: php artisan key:generate
